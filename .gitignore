@@ -21,3 +21,5 @@ src/internalpython.js
 /tmp.js
 Pipfile
 *~
+.replit
+replit.nix
