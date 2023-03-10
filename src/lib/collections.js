@@ -1294,6 +1294,12 @@ function collections_mod(collections) {
         constructor: function ChainMap (maps) {
             console.log(maps);
         },
+        slots: {
+            tp$new(args, kwargs) {
+                console.log(args, kwargs);
+                return collections.ChainMap(args);
+            }
+        }
     }
     );
 
