@@ -31,7 +31,7 @@ function collections_mod(collections) {
             // 'UserString',
             "Counter",
             "OrderedDict",
-            // 'ChainMap'
+            "ChainMap"
         ].map((x) => new Sk.builtin.str(x))
     );
 
@@ -1289,6 +1289,13 @@ function collections_mod(collections) {
     namedtuple.co_varnames = ["typename", "field_names", "rename", "defaults", "module"];
 
     collections.namedtuple = new Sk.builtin.func(namedtuple);
+
+    collections.ChainMap = Sk.abstr.buildNativeClass("collections.ChainMap", {
+        constructor: function ChainMap (maps) {
+            console.log(maps);
+        },
+    }
+    );
 
     return collections;
 }
