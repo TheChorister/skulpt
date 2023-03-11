@@ -1292,12 +1292,23 @@ function collections_mod(collections) {
 
     collections.ChainMap = Sk.abstr.buildNativeClass("collections.ChainMap", {
         constructor: function ChainMap (maps) {
-            console.log(maps);
+            this.maps = maps;
         },
         slots: {
-            tp$new(args, kwargs) {
-                console.log(args, kwargs);
-                return collections.ChainMap(args);
+            tp$init(args) {
+                this.constructor(args);
+            },
+            mp$subscript(key) {
+                const mapsJs = Sk.ffi.remapToJs(this.maps);
+                console.log(key, mapsJs);
+                for (let i = 0; i < mapsJs.length; i++) {
+                    let mapItem = mapsJs[i];
+                    console.log("mapItem: ", mapItem);
+                    if (Object.keys(mapItem).indexOf(Sk.ffi.remapToJs(key)) >= 0) {
+                        return Sk.ffi.remapToPy(mapItem[key]);
+                    }
+                }
+                return new Sk.builtin.KeyError(key);
             }
         }
     }
